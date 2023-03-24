@@ -1,0 +1,128 @@
+<!DOCTYPE html="ko">
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>instagram layout</title>
+
+        <!--logo font, font-family: 'Lobster', cursive;-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+        
+        <style>
+            #whole {
+                padding: 0;
+                margin: 10px;
+            }
+            #container {
+                display: flex;
+                flex-direction: column;
+                margin-top: 50px;
+                background-color: #fff;
+                width: 800px;
+                height: auto;
+            }
+            #logo{
+                display: block;
+                justify-content: flex-start;
+                align-items: center;
+                font-family: 'Lobster', cursive;
+                font-size: 50px;
+                margin-left: 20px;
+                margin-bottom: 0;
+            }
+            .top{
+                width: 800px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin: 10px;
+            }
+            .top-right{
+                display: flex;
+                width: auto;
+                height: auto;
+                align-items: center;
+            }
+            .top-right img{
+                border-radius: 50%;
+                margin-right: 10px;
+                width: 50px;
+                height: 50px;
+                margin: 10px;
+            }    
+            .top-right p{
+                font-size: 24px;
+                font-weight: bold;
+            }
+            .post-img {
+                width: 800px;
+                height: auto;
+                margin: 10px;
+            }
+            .icons {
+                width: 800px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin: 10px;
+            }
+            .icons-right {
+                display: flex;
+                width: auto;
+                height: auto;
+                align-items: center;
+            }
+            .icons img {
+                width: 30px;
+                height: auto;
+            }
+            .icons-right img {
+                margin: 10px;
+            }
+            .post-words {
+                font-size: 24px;
+                margin: 10px;
+            }
+            #post-comments {
+                font-size: 24px;
+                color: #808080;
+                margin-left: 10px;
+                margin-top: 0;
+            }
+            #post-date {
+                font-size: 18px;
+                color: #808080;
+                margin-left: 10px;
+                margin-top: 20px;
+            }
+        </style>
+    </head>
+    <body id="whole">
+        <div id="container">
+            <h1 id="logo">Instagram</h1>
+            <div class="top">
+                <div class="top-right">
+                    <img src="images/profile.png" alt="profile image"/>
+                    <p>yuri_k_526</p>
+                </div>
+                <img src="images/ellipsis.jpg"/>
+            </div>
+            <div class="post-img">
+                <img src="images/post_img.jpg" alt="post image"/>
+            </div>
+            <div class="icons">
+                <div class="icons-right">
+                    <img src="images/Like.jpg" alt="Like"/>
+                    <img src="images/Comment.jpg" alt="Comments"/>
+                    <img src="images/Share Post.jpg" alt="Share"/>
+                </div>
+                <img src="images/Save.jpg" alt="Save"/>
+            </div>
+            <p class="post-words"><strong>좋아요 183.1만개</strong></p>
+            <p class="post-words"><strong>yuri_k_526</strong> 친구랑 같이 호캉스</p>
+            <p id="post-comments">댓글 999개 모두 보기</p>
+            <p id="post-date">3월 16, 2023</p>
+        </div>
+    </body>
+</html>

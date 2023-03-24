@@ -1,0 +1,268 @@
+<!DOCTYPE html="ko">
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>지정된 레이아웃으로 레시피 문서 구성</title>
+        <!--font-->
+        <link href="https://fonts.googleapis.com/css?family=Jua:400" rel="stylesheet">
+
+        <style>
+            #background {
+                background-color: #ccc;
+            }
+            .container {
+                display: flex;
+                flex-direction: column;
+                width: 1200px;
+                height: auto;
+                margin: 50px auto 30px auto;
+                background-color: #eee;
+            }
+            .header {
+                position: fixed;
+                width: 100%;
+                height: auto;
+                top: 0;
+                left: 0;
+                width: 100%;
+                z-index: 9999;
+                background-image: url("https://png.pngtree.com/thumb_back/fh260/back_our/20190622/ourmid/pngtree-gourmet-cuisine-minimalist-background-image_210199.jpg");
+                align-items: center;
+                text-align: center;
+            }
+            .header p {
+                font-size: 40px;
+                font-family: 'Jua';
+            }
+            .container hr { 
+                margin-top: 95px;
+                width: 100%;
+                height: 2px;
+                background-color: black;
+            }
+            .middle {
+                position:relative;
+                display: flex;
+                flex-direction: row;
+                width: 100%;
+                margin-top: 5px;
+                margin-bottom: 50px;
+            }
+            .middle h3{
+                margin-left: 20px;
+            }
+            .middle-main {
+                display:flex;
+                width : 800px;
+                margin: 10px 0px 10px 0px;
+                flex-direction: column;
+                background-color: white;
+            }
+            .middle-main-top {
+                display: flex;
+                flex-direction: row;
+                margin:20px 10px 30px 10px;
+            }
+            .middle-main-top img {
+                width: 350px;
+                height: auto;
+                border-radius: 10px;
+                margin-right: 20px;
+            }
+            .middle-main-top p{
+                font-size: 10pt;
+                text-align: left;
+            }
+            .middle-main table, tr, th, td{
+                border : 2px solid black;
+                text-align: center;
+                border-collapse: collapse;
+            }
+            .middle-main table {
+                width: 400px;
+                height: auto;
+                margin: auto;
+            }
+            .middle-main th{
+                background-color: bisque;
+                font-weight: bold;
+            }
+            .middle-main ol{
+                display:flex;
+                flex-direction: row;
+                margin: 5px 10px 10px 0px;
+            }
+            .middle-main ol li{
+                width: 150px;
+                margin-right: 30px;
+            }
+            .middle-float {
+                position: absolute;
+                top: 10px;
+                right:0;
+                width : 370px;
+                background-color: white;
+                padding:20px;
+            }
+            .footer {
+                width: 100%;
+                height:auto;
+                text-align: center;
+                background-color: #555;
+            }
+            .footer p{
+                color: #eee;
+                font-size: 20px;
+            }
+            button {
+                background-color: bisque;
+                margin: 20px;
+                width: 100px;
+                height : 40px;
+                border :0ch
+            }
+            label {
+                display: inline-block;
+                width: 50px;
+                height: 30px;
+                background-color: gray;
+                border-radius: 15px;
+                position: relative;
+            }
+
+            input[type="checkbox"] {
+                display: none;
+            }
+
+            input[type="checkbox"]:checked + label {
+                background-color: green;
+            }
+
+            label:before {
+                content: "";
+                position: absolute;
+                top: 3px;
+                left: 3px;
+                width: 24px;
+                height: 24px;
+                border-radius: 50%;
+                background-color: white;
+                transition: all 0.2s ease-in-out;
+            }
+
+            input[type="checkbox"]:checked + label:before {
+                transform: translateX(20px);
+            }
+
+        </style>
+    </head>
+    <body id="background">
+        <div class="container">
+            <div class="header">
+                <p>김치볶음밥 레시피</p>
+            </div>
+            <hr>
+            <div class="middle">
+                <div class="middle-main">
+                    <div class="middle-main-top">
+                        <img src="https://i0.wp.com/chopchopchoi.com/wp-content/uploads/2020/03/KimchiFriedRice-scaled.jpg?fit=1024%2C682&ssl=1" alt="김치볶음밥 이미지"/>
+                        <p>김치볶음밥은 한국의 전통음식인 김치와 우리의 주식인 밥으로 만든 음식으로, 많은 한국사람들의 소울푸드라고 볼 수 있다. 나 역시 김치볶음밥을 일주일에 한 번은 꼭 먹을 정도로 좋아한다.
+                            요리를 못하는 나도 김치볶음밥은 꼭 스스로 해먹는데 그 이유는 김치볶음밥은 다양한 레시피가 존재하고, 어딜 가든 쉽게 볼 수 있지만 정말 내 입맛에 잘 맞는 김치볶음밥을 찾기 어렵기 때문이다.
+                            이 문서를 통해 소개하는 레시피는 내가 가장 좋아하는 김치볶음밥 레시피다. 옆에 링크가 있는데 그 링크에서 알려주는 레시피를 조금씩 변형해서 만든 레시피이다.
+                        </p>
+                    </div>
+                    <table>
+                        <tr>
+                            <th>재료</th>
+                            <th>수량</th>
+                        </tr>
+                        <tr>
+                            <td>김치</td>
+                            <td>4분의 1포기</td>
+                        </tr>
+                        <tr>
+                            <td>밥</td>
+                            <td>한 국그릇</td>
+                        </tr>
+                        <tr>
+                            <td>식용유</td>
+                            <td>약간</td>
+                        </tr>
+                        <tr>
+                            <td>스팸</td>
+                            <td>반 캔</td>
+                        </tr>
+                        <tr>
+                            <td>달걀</td>
+                            <td>한 개</td>
+                        </tr>
+                        <tr>
+                            <td>올리고당</td>
+                            <td>한 스푼</td>
+                        </tr>
+                        <tr>
+                            <td>설탕</td>
+                            <td>반 스푼</td>
+                        </tr>
+                        <tr>
+                            <td>다시다</td>
+                            <td>반 티스푼</td>
+                        </tr>
+                    </table>
+                    <h3>조리 방법</h3>
+                    <ol>
+                        <li>팬에 기름을 두른다</li>
+                        <li>기름이 달아오르면 김치와 스팸, 양념들을 넣고 볶는다</li>
+                        <li>김치가 투명해지면 밥을 넣고 볶는다</li>
+                        <li>다 볶아진 밥을 그릇에 담고 계란후라이를 해서 얹는다</li>
+                    </ol>
+                </div>    
+                <div class="middle-float">
+                    <p>참고 레시피1<br>
+                         &#58;<a href="https://www.10000recipe.com/recipe/6865385">https://www.10000recipe.com/recipe/6865385</a> <br><br>
+                        참고레시피2<br>
+                        &#58;<a href="https://harpersbazaar.co.kr/article/70176">https://harpersbazaar.co.kr/article/70176</a> <br><br>
+                        참고레시피3<br>
+                        &#58;<a href="https://www.10000recipe.com/recipe/6955141">https://www.10000recipe.com/recipe/6955141</a> <br><br>
+                     </p>
+                </div>
+            </div>
+            <div class="footer">
+                <p>
+                    학번 &#58; 2020112423<br>이름 &#58; 김유리
+                </p>
+                <button onclick="expandDoc()">size up</button>
+                <input type="checkbox" id="toggle">
+                <label for="toggle"></label>
+                <button onclick="expandHeader()">header size</button>
+
+                <script>
+                    function expandDoc() {
+                        var Doc = document.querySelector(".container")
+                        var current_width = Doc.offsetWidth;
+                        Doc.style.width = (current_width + 50) + "px";
+                    }
+
+                    const toggle = document.getElementById("toggle");
+                    
+
+                    var back = document.getElementById("background")
+                    toggle.addEventListener("change", function(){
+                        if(this.checked) {
+                        back.style.backgroundColor = "black";
+                        }else {
+                        back.style.backgroundColor = "white";}
+                    });
+
+                    function expandHeader() {
+                        var header = document.querySelector(".header");
+                        var header_height = header.offsetHeight;
+                        if(confirm("헤더를 키우시겠습니까?")){
+                            header.style.height = (header_height + 10) + "px";
+                        }
+                    }
+                </script>
+            </div>
+        </div>
+    </body>
+</html>
