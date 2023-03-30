@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<meta charset="UTF-8">
+
+<head>
+    <title>page title</title>
+<style>
+    button#btn1:hover {
+        background-color: yellow;
+        cursor: grab;
+    }
+    button#btn1:active {
+        background-color: white;
+        cursor: grabbing;
+    }
+    button:disabled {
+        cursor: progress;
+    }
+    a:any-link:active{
+        background-color: blue;
+        color: white;
+        /* 동작이 겹쳐서 color가 잘 먹지 않음 */
+    }
+    a:any-link:hover{
+        color: green;
+    }
+    ::selection {
+        /* 브라우저 드래그 시 발생하는 이벤트 */
+        background-color: yellow;
+        color: black;
+    }
+    input[type=radio]:checked + label {
+        font-weight: bold;
+    }
+
+</style>
+</head>
+<body>
+    <!-- button#btn2.class / 클래스는. id # 으로 주면됨 -->
+    <h1>고추장찌개 레시피</h1>
+    <button id="btn1" onclick="
+    setTimeout(function(){ 
+        document.getElementsByTagName('h1')[0].innerHTML='<i>백종원</i>찌개 레시피';
+        setTimeout(function() {
+            document.getElementsByTagName('h1')[0].innerHTML='<i style=\'color: red\'>백종원</i>찌개 레시피'
+        }, 3000)
+    }, 3000)"></button>
+    <button id="btn2" onclick="
+    setTimeout(function() {  
+        document.getElementsByTagName('h1')[0].innerHTML='<i>백종원</i>찌개 레시피'
+    }, 3000);
+    setTimeout(function() {
+        document.getElementByTagName('h1')[0].innerHTML='<i style=\'color: red\'>백종원</i>찌개 레시피'
+    }, 3000);
+    ">버튼2</button>
+    <button id="btn3" disabled>버튼3</button>
+    <a href="https://www.naver.com/" style="font-size: 24pt;"> 네이버</a>
+    <form>
+        <input type="radio" name="gender">
+        <label for="male">male</label><br>
+        <input type="radio" name="gender">
+        <label for="female">female</label><br>
+        <input type="radio" name="gender">
+        <label for="other">other</label><br>
+    </form>
+</body>
+</html>
