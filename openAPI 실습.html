@@ -1,0 +1,52 @@
+<!DOCTYPE html='ko'>
+
+<html>
+    <head>
+        <script>
+            function load() {
+                const con = confirm("데이터를 불러오시겠습니까?");  //confirm : 데이터를 불러올지 안불러올지
+                if(con == false){
+                    console.log("데이터를 안불러옵니다");
+                    return;
+                }
+                fetch("http://openapi.seoul.go.kr:8088/71747673467a657235396c54657648/json/RealtimeCityAir/1/25/").then(function(res) {
+                    res.json().then(function(res2) {
+                        alert(res2.RealtimeCityAir.RESULT.MESSAGE);
+                        alert(res2.RealtimeCityAir.row[0].MSRSTE_NM + "에 오신걸 환영합니다.");
+                        for(var i =0; i<25; i++){
+                            document.getElementById("data").innerHTML = document.getElementById("data").innerHTML + `
+                            <tr>
+                                <td>${res2.RealtimeCityAir.row[i].MSRSTE_NM}</td>
+                                <td>${res2.RealtimeCityAir.row[i].PM10}</td>
+                                <td>${res2.RealtimeCityAir.row[i].PM25}</td>
+                                <td>${res2.RealtimeCityAir.row[i].O3}</td>
+                                <td>${res2.RealtimeCityAir.row[i].SO2}</td>
+                            </tr>
+                            `
+                        }
+
+                    });
+                    console.log(res);
+                });
+                
+            }
+        </script>
+    </head>
+    <body>
+        <button onclick="load()">데이터 불러오기</button>
+        <table>
+            <thead>
+                <th>지역명</th>
+                <th>PM10</th>
+                <th>PM25</th>
+                <th>O3</th>
+                <th>S02</th>                
+            </thead>
+            <tbody id="data">
+                <tr>
+                    
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>
