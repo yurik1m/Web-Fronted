@@ -22,7 +22,7 @@
                         var IDEX_MVL = new Array();
                         var count = 0
                         for(var i =0; i<25; i++){
-                            if(res2.RealtimeCityAir.row[i]=== 0) count++;
+                            if(res2.RealtimeCityAir.row[i].IDEX_MVL === 0) count=count+1;
                             IDEX_MVL[i] = res2.RealtimeCityAir.row[i].IDEX_MVL;
                             
                         }
@@ -55,7 +55,7 @@
                             if(res2.RealtimeCityAir.row[i].IDEX_MVL >= bad) {
                                 idexCell.setAttribute('style', 'font-weight: bold; color: red;');
                             }
-                            else if(res2.RealtimeCityAir.row[i].IDEX_MVL <= good) {
+                            else if(idexCell.innerHTML !=0 && idexCell.innerHTML <= good) {
                                 idexCell.setAttribute('style', 'font-weight: bold; color: blue;');}
                             else { idexCell.setAttribute('style', 'color: black');}
 
