@@ -1,116 +1,201 @@
-
 <!DOCTYPE html='ko'>
 
 <html>
-    <head>
-        <script>
-            function change_zero(num) {
-                if(num === 0) {return '-';}
-                return num;
-            }
 
-            function load() {
-                const con = confirm("데이터를 불러오시겠습니까?");  //confirm : 데이터를 불러올지 안불러올지
-                if(con == false){
-                    console.log("데이터를 안불러옵니다");
-                    return;
+<head>
+    <script src="chart.js"></script>
+    <!-- <script>
+        // document.onload = function() {
+        //     const ct2 = document.getElementById("myChart");
+        //     alert('onload');
+        // }  //global event handler 웹사이트에 있는 모든 html tag가 모두 로딩된 시점
+
+    
+    </script> -->
+    <script>
+        function change_zero(num) {
+            if (num === 0) { return '-'; }
+            return num;
+        }
+
+        async function load() {
+            const con = confirm("데이터를 불러오시겠습니까?");  //confirm : 데이터를 불러올지 안불러올지
+            if (con == false) {
+                console.log("데이터를 안불러옵니다");
+                return;
+            }
+            const res = await fetch("http://openapi.seoul.go.kr:8088/71747673467a657235396c54657648/json/RealtimeCityAir/1/25/");
+            const res2 = await res.json();
+
+            const data = document.getElementById("data");
+            const labels = new Array();
+            const datas = new Array();
+            const pm25 = [];
+
+            var IDEX_MVL = new Array();
+            var count = 0
+            for (var i = 0; i < 25; i++) {
+                if (res2.RealtimeCityAir.row[i].IDEX_MVL === 0) count = count + 1;
+                IDEX_MVL[i] = res2.RealtimeCityAir.row[i].IDEX_MVL;
+
+            }
+            var IDEX_MVL_sort = IDEX_MVL.sort((a, b) => b - a);
+            var bad = IDEX_MVL_sort[4];
+            var good = IDEX_MVL_sort[20 - count];
+
+            for (var i = 0; i < 25; i++) {
+                // labels.push(res2.RealtimeCityAir.row[i].MSRSTE_NM);
+                // data.push(res2.RealtimeCityAir.row[i].PM10);
+                labels[i] = res2.RealtimeCityAir.row[i].MSRSTE_NM;
+                datas[i] = res2.RealtimeCityAir.row[i].PM10;
+                pm25.push(res2.RealtimeCityAir.row[i].PM25);
+
+                const rows = document.createElement('tr');
+                rows.style.display = 'table-row';
+                if (i !== 0 && res2.RealtimeCityAir.row[i].MSRRGN_NM !== res2.RealtimeCityAir.row[i - 1].MSRRGN_NM) {
+                    rows.classList.add('border-top');
                 }
-                fetch("http://openapi.seoul.go.kr:8088/71747673467a657235396c54657648/json/RealtimeCityAir/1/25/").then(function(res) {
-                    res.json().then(function(res2) {
-                        const data = document.getElementById("data");
+                const msrsteCell = document.createElement('td');
+                const pmtCell = document.createElement('td');
+                const pmfCell = document.createElement('td');
+                const oCell = document.createElement('td');
+                const soCell = document.createElement('td');
+                const idexCell = document.createElement('td');
+                const idexnCell = document.createElement('td');
 
-                        var IDEX_MVL = new Array();
-                        var count = 0
-                        for(var i =0; i<25; i++){
-                            if(res2.RealtimeCityAir.row[i].IDEX_MVL === 0) count=count+1;
-                            IDEX_MVL[i] = res2.RealtimeCityAir.row[i].IDEX_MVL;
-                            
+                msrsteCell.innerHTML = res2.RealtimeCityAir.row[i].MSRSTE_NM;
+                pmtCell.innerHTML = change_zero(res2.RealtimeCityAir.row[i].PM10);
+                pmfCell.innerHTML = change_zero(res2.RealtimeCityAir.row[i].PM25);
+                oCell.innerHTML = change_zero(res2.RealtimeCityAir.row[i].O3);
+                soCell.innerHTML = change_zero(res2.RealtimeCityAir.row[i].SO2);
+                idexCell.innerHTML = change_zero(res2.RealtimeCityAir.row[i].IDEX_MVL);
+                idexnCell.innerHTML = res2.RealtimeCityAir.row[i].IDEX_NM;
+
+                if (idexCell.innerHTML >= bad) {
+                    idexCell.setAttribute('style', 'font-weight: bold; color: red;');
+                }
+                else if (idexCell.innerHTML != '-' && idexCell.innerHTML <= good) {
+                    idexCell.setAttribute('style', 'font-weight: bold; color: blue;');
+                }
+                else { idexCell.setAttribute('style', 'color: black'); }
+
+                if (idexnCell.innerHTML === "좋음") idexnCell.setAttribute('style', 'color: blue');
+                else if (idexnCell.innerHTML === "보통") idexnCell.setAttribute('style', 'color: green');
+                else idexnCell.setAttribute('style', 'color: red');
+
+                rows.appendChild(msrsteCell);
+                rows.appendChild(pmtCell);
+                rows.appendChild(pmfCell);
+                rows.appendChild(oCell);
+                rows.appendChild(soCell);
+                rows.appendChild(idexCell);
+                rows.appendChild(idexnCell);
+
+                data.appendChild(rows);
+
+
+            }
+            console.log(labels);
+            console.log(datas);
+
+            const ctx = document.getElementById('myChart');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '# of Votes',
+                        data: datas,
+                        // backgroundColor: "#FF0000",
+                        borderWidth: 1
+                        
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
                         }
-                            var IDEX_MVL_sort = IDEX_MVL.sort((a, b) => b - a);
-                            var bad = IDEX_MVL_sort[4];
-                            var good = IDEX_MVL_sort[20-count]; 
-                       
-                         for(var i=0; i<25; i++){   
-                            const rows = document.createElement('tr');
-                            rows.style.display = 'table-row';
-                            if (i !== 0 && res2.RealtimeCityAir.row[i].MSRRGN_NM !== res2.RealtimeCityAir.row[i - 1].MSRRGN_NM) {
-                                rows.classList.add('border-top');
-                            }
-                            const msrsteCell = document.createElement('td');
-                            const pmtCell = document.createElement('td');
-                            const pmfCell = document.createElement('td');
-                            const oCell = document.createElement('td');
-                            const soCell = document.createElement('td');
-                            const idexCell = document.createElement('td');
-                            const idexnCell = document.createElement('td');
+                    }
+                }
+            });
 
-                            msrsteCell.innerHTML = res2.RealtimeCityAir.row[i].MSRSTE_NM;
-                            pmtCell.innerHTML = change_zero(res2.RealtimeCityAir.row[i].PM10);
-                            pmfCell.innerHTML = change_zero(res2.RealtimeCityAir.row[i].PM25);
-                            oCell.innerHTML = change_zero(res2.RealtimeCityAir.row[i].O3);
-                            soCell.innerHTML = change_zero(res2.RealtimeCityAir.row[i].SO2);
-                            idexCell.innerHTML = change_zero(res2.RealtimeCityAir.row[i].IDEX_MVL);
-                            idexnCell.innerHTML = res2.RealtimeCityAir.row[i].IDEX_NM;
-
-                            if(res2.RealtimeCityAir.row[i].IDEX_MVL >= bad) {
-                                idexCell.setAttribute('style', 'font-weight: bold; color: red;');
-                            }
-                            else if(idexCell.innerHTML !=0 && idexCell.innerHTML <= good) {
-                                idexCell.setAttribute('style', 'font-weight: bold; color: blue;');}
-                            else { idexCell.setAttribute('style', 'color: black');}
-
-                            if(idexnCell.innerHTML === "좋음") idexnCell.setAttribute('style', 'color: blue');
-                            else if(idexnCell.innerHTML === "보통") idexnCell.setAttribute('style', 'color: green');
-                            else idexnCell.setAttribute('style', 'color: red'); 
-
-                            rows.appendChild(msrsteCell);
-                            rows.appendChild(pmtCell);
-                            rows.appendChild(pmfCell);
-                            rows.appendChild(oCell);
-                            rows.appendChild(soCell);
-                            rows.appendChild(idexCell);
-                            rows.appendChild(idexnCell);
-
-                            data.appendChild(rows);
-
-                            
+            const ctx2 = document.getElementById('myChart2');
+            new Chart(ctx2, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '# of Votes',
+                        data: pm25,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
                         }
+                    }
+                }
+            });
+            // fetch("http://openapi.seoul.go.kr:8088/71747673467a657235396c54657648/json/RealtimeCityAir/1/25/").then(function (res) {
+            //     res.json().then(function (res2) {
 
-                    });
-                    console.log(res);
-                });
-                
-            }
-        </script>
-        <style>
-            #data tr.border-top > td {
-                border-top: 2px solid black;
-            }
-            table {
-                text-align: center;
-                width: 500px;
-            }
 
-            #data td {
-                width: 50px;
-                border: 1px solid gray;
-            }
-        </style>
-    </head>
-    <body>
-        <button onclick="load()">데이터 불러오기</button>
-        <table>
-            <thead>
-                <th>지역명</th>
-                <th>PM10</th>
-                <th>PM25</th>
-                <th>O3</th>
-                <th>S02</th>
-                <th>IDEX_MVL</th>
-                <th>IDEX_NM</th>                
-            </thead>
-            <tbody id="data">
-            </tbody>
-        </table>
-    </body>
+            //     });
+            //     console.log(res);
+            // });
+
+        }
+    </script>
+    <style>
+        table, thead, tbody, th, tr, td {
+          border-collapse: collapse;
+        }
+
+        #data tr.border-top>td {
+            border-top: 2px solid black;
+        }
+
+        table {
+            text-align: center;
+            width: 500px;
+        }
+
+        #data td {
+            width: 50px;
+            border: 1px solid gray;
+        }
+    </style>
+</head>
+
+<body>
+    <button onclick="load()">데이터 불러오기</button>
+    <table>
+        <thead>
+            <th>지역명</th>
+            <th>PM10</th>
+            <th>PM25</th>
+            <th>O3</th>
+            <th>S02</th>
+            <th>IDEX_MVL</th>
+            <th>IDEX_NM</th>
+        </thead>
+        <tbody id="data">
+        </tbody>
+    </table>
+    <div>
+        <canvas id="myChart"></canvas>
+    </div>
+    <div>
+        <canvas id="myChart2"></canvas>
+    </div>
+
+    <!--오픈소스 라이브러리 스크립트 코드를 가지고 옴-->
+
+
+
+</body>
+
 </html>
