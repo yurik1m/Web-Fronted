@@ -139,6 +139,31 @@
                     }
                 }
             });
+            const chart3 = document.getElementById('myChart3');
+            new Chart(chart3, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '# of Votes',
+                        data: pm25,
+                        borderWidth: 1
+                    }] 
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Chart.js Floating Bar Chart'
+                    }
+                    }
+                }
+            });
+
             // fetch("http://openapi.seoul.go.kr:8088/71747673467a657235396c54657648/json/RealtimeCityAir/1/25/").then(function (res) {
             //     res.json().then(function (res2) {
 
@@ -190,6 +215,9 @@
     </div>
     <div>
         <canvas id="myChart2"></canvas>
+    </div>
+    <div>
+        <canvas id="myChart3"></canvas>
     </div>
 
     <!--오픈소스 라이브러리 스크립트 코드를 가지고 옴-->
