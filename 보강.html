@@ -33,6 +33,7 @@
 
       //내가 짠 것
       //게임 설명 : 애국가 1절만 한 문장씩 배열 안에 저장해놓고, 그 구절을 랜덤으로 띄워 사용자가 똑같이 문장을 10초 안에 입력하면 성공하는 게임
+      
       const verses = [
         "동해물과 백두산이 마르고 닳도록",
         "하느님이 보우하사 우리나라 만세",
@@ -40,42 +41,46 @@
         "대한사람 대한으로 길이 보전하세",
       ];
 
-      function getrandomVerse() { //랜덤으로 한 문장 호출하는 함수
-        verse = verses[Math.floor(Math.random() * verses.length)];
-        const verseElement = document.getElementById('verse');
+      function getrandomVerse() {
+        const verse = verses[Math.floor(Math.random() * verses.length)];
+        const verseElement = document.getElementById("verse");
         verseElement.textContent = verse;
       }
-      
-      const typingElement = document.getElementById('typing');
-      const resultElement = document.getElementById('result');
 
-      function check() {  
-        const typing = typingElement.value.trim();
-        if(typing !== verse) {
-          window.reject("실패");
+
+      function check(event) {
+        const typingElement = document.getElementById("typing");
+        const typing = typingElement.value;
+        const verse = document.getElementById("verse").textContent;
+        if (typing !== verse) {
+          alert("실패"); //window.reject 썼는데 자꾸 이전에 reject가 선언이 안되어있다고 오류 떠서 일단 alert로 바꿨습니다.
         } else {
-          const timerPro = new Promise(function (resolve, reject){
+          const timerPro = new Promise(function (resolve, reject) {
             window.reject = reject;
-            setTimeout(function(){
-            resolve("성공");
-          }, 10000);
-        });
-        timerPro
-        .then(function(res) {
-          result.textContent = res;
-        })
-        .catch(function(err){
-          result.textContent = err;
-        });
+            setTimeout(function () {
+              resolve("성공");
+            }, 10000);
+          });
+          timerPro
+            .then(function (res) {
+              alert(res);
+            })
+            .catch(function (err) {
+              alert(err);
+            });
         }
       }
 
+
       
-      // typingElement.addEventListener("keyup", (event) => {
-      //   if (event.keyCode === 13) {
-      //     check(event);
-      //   }
-      // });
+      document.addEventListener("DOMContentLoaded", function() {
+        const typingElement = document.getElementById("typing");
+        typingElement.addEventListener("keydown", function(event) {
+          if (event.key === "Enter") {
+            check(event);
+          }
+        });
+      });
 
       
     </script>
@@ -85,8 +90,6 @@
     <hr>
     <button onclick="getrandomVerse()"> 랜덤 문장 생성 </button>
     <p id="verse"></p>
-    <input type="text" id="typing">
-    <button onclick="check()"> 티이핑 완료 </button>
-    <p id="result"></p>
+    <input id="typing" type="text" onchange="check()">
   </body>
 </html>
